@@ -40,7 +40,7 @@ export const ContactForm = () => {
       reset();
       return Notify.failure(` ${name} is already in contacts. 😢`);
     }
-    dispatch(addContact({ name, phone: number }));
+    dispatch(addContact({ name, number }));
 
     reset();
   };

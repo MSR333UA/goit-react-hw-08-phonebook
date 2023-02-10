@@ -1,11 +1,7 @@
 import { TailSpin } from 'react-loader-spinner';
 
-const { useSelector } = require('react-redux');
-
 export const Loader = () => {
-  const isLoading = useSelector(state => state.contacts.isLoading);
-  // console.log(isLoading);
-  return isLoading ? (
+
     <TailSpin
       height="80"
       width="80"
@@ -16,5 +12,5 @@ export const Loader = () => {
       wrapperClassName=""
       visible={true}
     />
-  ) : null;
+ 
 };

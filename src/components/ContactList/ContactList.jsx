@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   ContactBtn,
@@ -8,11 +8,11 @@ import {
 } from './ContactList.styled';
 import { Loader } from 'components/Loader/Loader';
 import { deleteContact, fetchContacts } from 'redux/contacts/operations';
-import { getContacts, getFilter } from 'redux/selectors';
+import { selectFilteredContacts } from 'redux/selectors';
 
 export const ContactList = () => {
-  const contacts = useSelector(getContacts);
-  const filter = useSelector(getFilter);
+  const contacts = useSelector(selectFilteredContacts);
+
   const dispatch = useDispatch();
 
   // const isContactExist = useSelector(state =>
@@ -26,19 +26,20 @@ export const ContactList = () => {
     dispatch(fetchContacts());
   }, [dispatch]);
 
-  const filteredContacts = useMemo(
-    () => contacts.filter(contact => contact.name.includes(filter)),
-    [filter, contacts]
-  );
+  // const filteredContacts = useMemo(
+  //   () => contacts.filter(contact => contact.name.includes(filter)),
+  //   [filter, contacts]
+  // );
 
   const removeUser = id => {
     dispatch(deleteContact(id));
   };
 
+  const isLoading = useSelector(state => state.contacts.isLoading);
   return (
     <ListUl>
-      <Loader />
-      {filteredContacts.map(({ id, name, phone: number }) => {
+      {isLoading ? <Loader /> : null}
+      {contacts.map(({ id, name, number }) => {
         return (
           <ContactItem key={id}>
             <ContactText>
